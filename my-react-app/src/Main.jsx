@@ -61,6 +61,7 @@ const Main = () => {
           padding: 3,
         }}
       >
+        <img style={{width:"250px"}} src="https://london-post.co.uk/wp-content/uploads/2023/02/2CB060F7-824B-447D-88F8-EAEC3937DCB8.png" alt="amazon" />
         <Typography variant="h5" gutterBottom color="#0077B5">
           Amazon Reviews App
         </Typography>
@@ -80,7 +81,7 @@ const Main = () => {
           startIcon={<CloudDownloadIcon />}
           sx={{ mb: 1, backgroundColor: "#0077B5", color: "white" }}
         >
-          Download current view
+          Download selected reviews
         </Button>
         <Box sx={{ display: "flex", flexDirection: "row", mb: 1 }}>
           {["positive", "negative"].map((type) => (
@@ -104,7 +105,7 @@ const Main = () => {
         <TextField
           label={
             <React.Fragment>
-              <SearchIcon /> Search
+              <SearchIcon /> Search Reviews
             </React.Fragment>
           }
           variant="outlined"
