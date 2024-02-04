@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -11,13 +11,28 @@ import {
   Button,
   TextField,
 } from "@mui/material";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-import StarIcon from "@mui/icons-material/Star";
-import SearchIcon from "@mui/icons-material/Search";
+import {
+  ThumbUp as ThumbUpIcon,
+  ThumbDown as ThumbDownIcon,
+  CloudDownload as CloudDownloadIcon,
+  Star as StarIcon,
+  Search as SearchIcon
+} from "@mui/icons-material";
 
 const Main = () => {
+  const [positiveChecked, setPositiveChecked] = useState(false);
+  const [negativeChecked, setNegativeChecked] = useState(false);
+
+  const handlePositiveChange = () => {
+    setPositiveChecked(!positiveChecked);
+    setNegativeChecked(false);
+  };
+
+  const handleNegativeChange = () => {
+    setNegativeChecked(!negativeChecked);
+    setPositiveChecked(false);
+  };
+
   const fakeData = [
     {
       type: "positive",
@@ -57,11 +72,15 @@ const Main = () => {
           borderColor: "#0077B5",
           margin: 3,
           boxShadow: 4,
-          backgroundColor: "#F4F6F7", 
+          backgroundColor: "#F4F6F7",
           padding: 3,
         }}
       >
-        <img style={{width:"250px"}} src="https://london-post.co.uk/wp-content/uploads/2023/02/2CB060F7-824B-447D-88F8-EAEC3937DCB8.png" alt="amazon" />
+        <img
+          style={{ width: "250px" }}
+          src="https://london-post.co.uk/wp-content/uploads/2023/02/2CB060F7-824B-447D-88F8-EAEC3937DCB8.png"
+          alt="amazon"
+        />
         <Typography variant="h5" gutterBottom color="#0077B5">
           Amazon Reviews App
         </Typography>
@@ -84,23 +103,26 @@ const Main = () => {
           Download selected reviews
         </Button>
         <Box sx={{ display: "flex", flexDirection: "row", mb: 1 }}>
-          {["positive", "negative"].map((type) => (
+          <Box>
             <Checkbox
-              key={type}
-              icon={type === "positive" ? <ThumbUpIcon /> : <ThumbDownIcon />}
-              checkedIcon={
-                type === "positive" ? (
-                  <ThumbUpIcon style={{color:"#4CAF50"}} />
-                ) : (
-                  <ThumbDownIcon style={{color:"#D9534F"}} />
-                )
-              }
+              icon={<ThumbUpIcon />}
+              checkedIcon={<ThumbUpIcon style={{ color: "#4CAF50" }} />}
+              checked={positiveChecked}
+              onChange={handlePositiveChange}
             />
-          ))}
+          </Box>
+          <Box>
+            <Checkbox
+              icon={<ThumbDownIcon />}
+              checkedIcon={<ThumbDownIcon style={{ color: "#D9534F" }} />}
+              checked={negativeChecked}
+              onChange={handleNegativeChange}
+            />
+          </Box>
         </Box>
         <Checkbox
           icon={<StarIcon />}
-          checkedIcon={<StarIcon style={{color:"#F0A136"}} />}
+          checkedIcon={<StarIcon style={{ color: "#F0A136" }} />}
         />
         <TextField
           label={
