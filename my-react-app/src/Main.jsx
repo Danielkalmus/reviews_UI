@@ -1,22 +1,20 @@
 import React, { useState } from "react";
+// import axios from "axios";
 import {
   Box,
   Typography,
   Card,
   Checkbox,
   Grid,
-  List,
-  ListItem,
-  ListItemText,
-  Button,
+  // Button,
   TextField,
 } from "@mui/material";
 import {
   ThumbUp as ThumbUpIcon,
   ThumbDown as ThumbDownIcon,
-  CloudDownload as CloudDownloadIcon,
+  // CloudDownload as CloudDownloadIcon,
   Star as StarIcon,
-  Search as SearchIcon
+  Search as SearchIcon,
 } from "@mui/icons-material";
 
 const Main = () => {
@@ -25,36 +23,34 @@ const Main = () => {
 
   const handlePositiveChange = () => {
     setPositiveChecked(!positiveChecked);
-    setNegativeChecked(false);
   };
 
   const handleNegativeChange = () => {
     setNegativeChecked(!negativeChecked);
-    setPositiveChecked(false);
   };
 
-  const fakeData = [
-    {
-      type: "positive",
-      title: "Great Product",
-      description: "I loved this product! It exceeded my expectations.",
-    },
-    {
-      type: "negative",
-      title: "Not Recommended",
-      description: "Unfortunately, this product didn't meet my expectations.",
-    },
-    {
-      type: "positive",
-      title: "Excellent Service",
-      description: "The customer service was outstanding. Highly recommended.",
-    },
-    {
-      type: "negative",
-      title: "Quality Issues",
-      description: "The quality of the product was disappointing.",
-    },
-  ];
+  function Params() {
+    return positiveChecked && negativeChecked
+      ? "?page=1&sentiment=all"
+      : positiveChecked
+      ? "?page=1&sentiment=positive"
+      : negativeChecked
+      ? "?page=1&sentiment=negative"
+      : "";
+  }
+
+  const iframeUrl = "http://192.168.68.113:8080/" + Params();
+
+  // const ExportToExcel = () => {
+  //   return axios
+  //     .get("http://192.168.68.113:8080/export_to_excel" + Params())
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       throw error;
+  //     });
+  // };
 
   return (
     <Box
@@ -95,13 +91,14 @@ const Main = () => {
           my: 2,
         }}
       >
-        <Button
+        {/* <Button
           variant="contained"
           startIcon={<CloudDownloadIcon />}
           sx={{ mb: 1, backgroundColor: "#0077B5", color: "white" }}
+          onClick={ExportToExcel}
         >
           Download selected reviews
-        </Button>
+        </Button> */}
         <Box sx={{ display: "flex", flexDirection: "row", mb: 1 }}>
           <Box>
             <Checkbox
@@ -141,17 +138,17 @@ const Main = () => {
           <Card sx={{ margin: "30px", padding: 3 }}>
             <Typography variant="h6" color="#0077B5">
               Selected Reviews:
-            </Typography>
-            <List>
-              {fakeData.map((item, index) => (
-                <ListItem key={index}>
-                  <ListItemText
-                    primary={item.title}
-                    secondary={item.description}
-                  />
-                </ListItem>
-              ))}
-            </List>
+            </Typography>{" "}
+            {iframeUrl && (
+              <iframe
+                title="ReviewsFrame"
+                width="100%"
+                height="400"
+                src={iframeUrl}
+                allowFullScreen
+                style={{ border: "1px solid #ccc", marginTop: "20px" }}
+              ></iframe>
+            )}
           </Card>
         </Grid>
       </Grid>
